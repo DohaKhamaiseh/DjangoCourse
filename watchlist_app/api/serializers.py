@@ -3,7 +3,7 @@ from watchlist_app.models import Movie
 
 class MovieSerializer(serializers.Serializer):
     
-    # read_only mean autincreasing, not allow to edit
+    # read_only mean auto-increasing, not allow to edit
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField()
     description = serializers.CharField()
