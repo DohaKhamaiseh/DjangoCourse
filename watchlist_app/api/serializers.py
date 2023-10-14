@@ -18,7 +18,7 @@ class WatchlistSerializer(serializers.ModelSerializer):
         # the line above is equal to:
         # exclude = ['active']
 
-class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
+class StreamPlatformSerializer(serializers.ModelSerializer):
     
     # if we use HyperlinkedModelSerializer instead of ModelSerializer each item wil known as url not id
     # the value of the name attribute in the streamplatform details should be like this : streamplatform-detail to work or I will get lookup-field error
