@@ -43,54 +43,45 @@ class StreamPlatformDetailAV(generics.RetrieveUpdateDestroyAPIView):
     queryset = StreamPlatform.objects.all()
     serializer_class = StreamPlatformSerializer
 
-class ReviewAV(mixins.ListModelMixin,
-                  mixins.CreateModelMixin,
-                  generics.GenericAPIView):
+class ReviewAV(generics.ListAPIView):
     """
-    view to get all reviews for a specific watch and to create a new review
+    view to get all reviews for a specific watch and not allowed to create one because we don't want to create a review for any watch from url that for specific watch
     """
     
-    queryset = Review.objects.all()
+    # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     
-    def get(self, request, *args, **kwargs):
+    # overwrite queryset function
+    def get_queryset(self):
+        # watchlist is the FKey in the Review model that represents the watch list
+        pk = self.kwargs['pk']
+        return Review.objects.filter(watchlist=pk)
+    
+class ReviewCreateAV(generics.CreateAPIView):
+    """
+    View to create a new review for a given watch
+    """
+    
+    # queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    
+    # overwrite queryset function
+    def perform_create(self,serializer):
         """
-        function to get all reviews for a specific watch
+        overwrite create function
         """
-        return self.list(request, *args, **kwargs)
-        
-    def post(self, request, *args, **kwargs):
-        """
-        function to create a new review
-        """
-        return self.create(request, *args, **kwargs)
+        # first watchlist is the watch that has this id(pk)
+        # second watchlist is the FK in the Review model 
+        pk = self.kwargs['pk']
+        watchlist = Watchlist.objects.get(pk=pk)
+        serializer.save(watchlist=watchlist)
 
-class ReviewDetailAV(mixins.RetrieveModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.DestroyModelMixin,
-                    generics.GenericAPIView):
+class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     """
     view to get, update and delete a specific review(by id)
     """
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     
-    def get(self,request, *args, **kwargs):
-        """
-        function to get a specific review(by id)
-        """
-        return self.retrieve(request, *args, **kwargs)
-    
-    def put(self, request, *args, **kwargs):
-        """ 
-        function to update a specific review(by id)
-        """
-        return self.update(request, *args, **kwargs)
-       
-    def delete(self,request, *args, **kwargs):
-        """
-        function to delete a specific review(by id)
-        """
-        
-        return self.destroy(request, *args, **kwargs)
+   
         
