@@ -4,7 +4,9 @@ from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import viewsets
+from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
+
 
 from watchlist_app.models import Watchlist, StreamPlatform, Review
 from watchlist_app.api.serializers import (WatchlistSerializer, 
@@ -80,10 +82,13 @@ class ReviewCreateAV(generics.CreateAPIView):
     View to create a new review for a given watch
     """
     
-    # queryset = Review.objects.all()
+    
     serializer_class = ReviewSerializer
     
-    # overwrite queryset function
+    # we need this for duplication review issue
+    def  get_queryset(self):
+        return Review.objects.all()
+    
     def perform_create(self,serializer):
         """
         overwrite create function
@@ -91,8 +96,13 @@ class ReviewCreateAV(generics.CreateAPIView):
         # first watchlist is the watch that has this id(pk)
         # second watchlist is the FK in the Review model 
         pk = self.kwargs['pk']
+        # from user line to if line is to prevent the user from duplicate the review
+        user = self.request.user
         watchlist = Watchlist.objects.get(pk=pk)
-        serializer.save(watchlist=watchlist)
+        review_queryset =  Review.objects.filter(review_user=user, watchlist=watchlist)
+        if review_queryset.exists():
+            raise ValidationError("You already reviewed this watch!")
+        serializer.save(watchlist=watchlist,review_user=user)
 
 class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     """

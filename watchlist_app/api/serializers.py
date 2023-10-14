@@ -3,6 +3,9 @@ from watchlist_app.models import Watchlist, StreamPlatform, Review
 
 class ReviewSerializer(serializers.ModelSerializer):
     
+    # we wrote this to convert the review_user(which in Review model) from intger field(FK) to string(user name)
+    review_user = serializers.StringRelatedField(read_only=True)
+    
     class Meta:
         model = Review
         # fields = "__all__"

@@ -20,4 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('watch/', include("watchlist_app.api.urls")),
+    
+    # to create login logout form for other users(not admin)
+    path('api-auth',include('rest_framework.urls')),
 ]
