@@ -6,12 +6,15 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 from watchlist_app.models import Watchlist, StreamPlatform, Review
 from watchlist_app.api.serializers import (WatchlistSerializer, 
                                            StreamPlatformSerializer,
                                            ReviewSerializer)
+
+from watchlist_app.api.permissions import AdminOrReadOnly, ReviewUserOrReadOnly
 
 
 class WatchListAV(generics.ListCreateAPIView):
@@ -70,6 +73,10 @@ class ReviewAV(generics.ListAPIView):
     
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    # this is object level permission
+
+
+    
     
     # overwrite queryset function
     def get_queryset(self):
@@ -85,7 +92,7 @@ class ReviewCreateAV(generics.CreateAPIView):
     
     serializer_class = ReviewSerializer
     
-    # we need this for duplication review issue
+    # we need this for duplicating review issue
     def  get_queryset(self):
         return Review.objects.all()
     
@@ -110,6 +117,9 @@ class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    
+    # this is a custom permission
+    permission_classes = [ReviewUserOrReadOnly]
     
 
         
