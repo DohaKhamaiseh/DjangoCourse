@@ -32,6 +32,8 @@ class Watchlist(models.Model):
     platform = models.ForeignKey(StreamPlatform, on_delete=models.CASCADE, related_name="watchlist")
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
+    avg_rating = models.FloatField(default=0)
+    tot_rating = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

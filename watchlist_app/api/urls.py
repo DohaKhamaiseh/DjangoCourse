@@ -23,12 +23,12 @@ urlpatterns = [
     # path('review/<int:pk>/', ReviewDetailAV.as_view(), name='review-detail'),
     
     # to get all reviews to specific watch
-     path('platform/<int:pk>/review', ReviewAV.as_view(), name='review-list'),
+     path('<int:pk>/reviews', ReviewAV.as_view(), name='review-list'),
      
      # to create a new review for a specific watch
-       path('platform/<int:pk>/review-create', ReviewCreateAV.as_view(), name='review-create'),
+       path('<int:pk>/review-create', ReviewCreateAV.as_view(), name='review-create'),
      
      # to get a specific review
-    path('platform/review/<int:pk>/', ReviewDetailAV.as_view(), name='review-detail'),
+    path('review/<int:pk>/', ReviewDetailAV.as_view(), name='review-detail'),
     
 ]
