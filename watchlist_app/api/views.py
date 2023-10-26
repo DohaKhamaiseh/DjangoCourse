@@ -6,7 +6,7 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 
 from watchlist_app.models import Watchlist, StreamPlatform, Review
@@ -128,7 +128,9 @@ class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ReviewSerializer
     
     # this is a custom permission
-    permission_classes = [ReviewUserOrReadOnly]
+    # permission_classes = [ReviewUserOrReadOnly]
+    
+    permission_classes= [IsAuthenticated]
     
 
         

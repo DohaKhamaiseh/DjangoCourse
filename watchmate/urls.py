@@ -22,5 +22,6 @@ urlpatterns = [
     path('watch/', include("watchlist_app.api.urls")),
     
     # to create login logout form for other users(not admin)
-    path('api-auth',include('rest_framework.urls')),
+    # when using Authenticatation we commet this line because have oue own Auth(Pop up window will be created to login)
+    # path('api-auth',include('rest_framework.urls')),
 ]
