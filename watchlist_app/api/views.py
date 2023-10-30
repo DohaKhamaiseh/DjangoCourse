@@ -128,9 +128,9 @@ class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ReviewSerializer
     
     # this is a custom permission
-    # permission_classes = [ReviewUserOrReadOnly]
+    permission_classes = [ReviewUserOrReadOnly]
     
-    permission_classes= [IsAuthenticated]
+    # permission_classes= [IsAuthenticated]
     
 
         
