@@ -6,18 +6,18 @@ from watchlist_app.api.views import (WatchListAV, WatchDetailAV,
                                      ReviewAV, ReviewDetailAV, ReviewCreateAV)
 
 
-router = DefaultRouter()
-router.register('platform', StreamPlatformVS, basename='streamplatform')
+# router = DefaultRouter()
+# router.register('platform', StreamPlatformVS, basename='streamplatform')
 
 urlpatterns = [
     path('list/', WatchListAV.as_view(), name='watch-list'),
     path('<int:pk>/', WatchDetailAV.as_view(), name='watch-detail'),
     
-    path('',include(router.urls)),
+    # path('',include(router.urls)),
     
     # what inside router doing the same of both these urls
-    #  path('platforms/', StreamPlatformAV.as_view(), name='platform-list'),
-    # path('platform/<int:pk>/', StreamPlatformDetailAV.as_view(), name='streamplatform-detail'),
+     path('platforms/', StreamPlatformAV.as_view(), name='platform-list'),
+    path('platform/<int:pk>/', StreamPlatformDetailAV.as_view(), name='streamplatform-detail'),
     
     #    path('reviews/', ReviewAV.as_view(), name='review-list'),
     # path('review/<int:pk>/', ReviewDetailAV.as_view(), name='review-detail'),

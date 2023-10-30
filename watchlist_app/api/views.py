@@ -24,12 +24,18 @@ class WatchListAV(generics.ListCreateAPIView):
     queryset = Watchlist.objects.all()
     serializer_class = WatchlistSerializer
     
+    # The Admin is just who can create Watchlist
+    permission_classes = [AdminOrReadOnly]
+    
 class WatchDetailAV(generics.RetrieveUpdateDestroyAPIView):
     """
     View for get a specific Watchlist(by id) , update it and delete it
     """
     queryset = Watchlist.objects.all()
     serializer_class = WatchlistSerializer
+    
+    # The Admin is just who can edit Watchlists
+    permission_classes = [AdminOrReadOnly]
    
            
 class StreamPlatformAV(generics.ListCreateAPIView):
@@ -40,6 +46,9 @@ class StreamPlatformAV(generics.ListCreateAPIView):
     
     queryset = StreamPlatform.objects.all()
     serializer_class = StreamPlatformSerializer
+    
+    #The Admin is just who can create Platform
+    permission_classes = [AdminOrReadOnly]
       
 class StreamPlatformDetailAV(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -48,6 +57,9 @@ class StreamPlatformDetailAV(generics.RetrieveUpdateDestroyAPIView):
     
     queryset = StreamPlatform.objects.all()
     serializer_class = StreamPlatformSerializer
+    
+    #The Admin is just who can edit Platforms
+    permission_classes = [AdminOrReadOnly]
 
 # class StreamPlatformVS(viewsets.ModelViewSet):
 #     """

@@ -20,5 +20,5 @@ class ReviewUserOrReadOnly(permissions.BasePermission):
            return True
         else:
             # Check permissions for write request
-            # this line will check that user who want ot edit is the same user who has the review?
-            return request.user == obj.review_user
+            # this line will check that user who want ot edit is the same user who has the review? or the user is the Admin
+            return request.user == obj.review_user or request.user.is_staff
