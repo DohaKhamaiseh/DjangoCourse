@@ -38,3 +38,19 @@ After Encoding:
 
 ## Create a URL to add User
 ![User](./public/register.png)
+
+
+# JWT Authentication using Postman: 
+
+## Create a URL take the username and password and get the pair token:
+![pair](./public/pair_token.png)
+
+### Before Access Token expired:
+![Before](./public/access_before_5m.png)
+
+### After Access Token expired:
+![After](./public/access_after_5m.png)
+
+
+## Create a URL take the Refresh  token to get a new Access token after expired:
+![New Access](./public/new_access.png)

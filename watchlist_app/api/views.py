@@ -86,7 +86,7 @@ class ReviewAV(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     # this is object level permission
-
+    permission_classes= [IsAuthenticated]
 
     
     
