@@ -54,3 +54,6 @@ After Encoding:
 
 ## Create a URL take the Refresh  token to get a new Access token after expired:
 ![New Access](./public/new_access.png)
+
+# The second request for Reviewlist(not authenticated), the first request already done(we allow for 1 anon request per day)
+![Anon_throttling](./public/anon_throttling.png)

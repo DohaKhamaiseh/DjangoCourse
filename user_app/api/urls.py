@@ -17,10 +17,10 @@ urlpatterns = [
      
      # JWT Authentication(You can use it or use normal Token(above)):
      # To generate an access(for 5 min.) token and refresh token(for 24 min.)
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     
     # To generate an access token using refresh token after access expired
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     
 ]

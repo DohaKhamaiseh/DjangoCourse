@@ -135,8 +135,28 @@ REST_FRAMEWORK = {
 
   'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.BasicAuthentication',
-        #   'rest_framework.authentication.TokenAuthentication',
-         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+          'rest_framework.authentication.TokenAuthentication',
+        #  'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+  
+  # this is a global Throttling  that apply for all classes(views)
+    #   'DEFAULT_THROTTLE_CLASSES': [
+    #       # AnonRateThrottle for anonymous user(unregistered)
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     # UserRateThrottle for registered user
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ],
+      # The number of requests is for all views not just one.(if I use all of them for one views I can't send requests for other views)
+      # for object level throttling the number of requests is sum of all requests for all views that have throttling enabled
+    'DEFAULT_THROTTLE_RATES': {
+         # means 1 request allowed per day
+        'anon': '1/day',
+        # means 3 request allowed per day
+        'user': '3/day',
+        'review-list' : '5/day',
+        'review-create':'2/day',
+        'review-detail' : '2/day',
+        
+    }
 
 }

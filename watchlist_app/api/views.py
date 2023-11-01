@@ -7,6 +7,7 @@ from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
 
 
 from watchlist_app.models import Watchlist, StreamPlatform, Review
@@ -15,6 +16,7 @@ from watchlist_app.api.serializers import (WatchlistSerializer,
                                            ReviewSerializer)
 
 from watchlist_app.api.permissions import AdminOrReadOnly, ReviewUserOrReadOnly
+from watchlist_app.api.throttling import ReviewAVThrottle, ReviewCreateAVhrottle
 
 
 class WatchListAV(generics.ListCreateAPIView):
@@ -85,9 +87,11 @@ class ReviewAV(generics.ListAPIView):
     
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    # this is object level permission
-    permission_classes= [IsAuthenticated]
-
+    # this is object level permission, throttling(only the review list for specific watch will be restricted)
+    # permission_classes= [IsAuthenticated]
+    # here for Reviewlist requests by registered users we have 5 requests per day
+    throttle_classes = [ReviewAVThrottle, AnonRateThrottle]
+    
     
     
     # overwrite queryset function
@@ -103,6 +107,8 @@ class ReviewCreateAV(generics.CreateAPIView):
     
     
     serializer_class = ReviewSerializer
+    # here for Review create requests by registered users we have 2 requests per day
+    throttle_classes = [ReviewCreateAVhrottle]
     
     # we need this for duplicating review issue
     def  get_queryset(self):
@@ -143,6 +149,10 @@ class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [ReviewUserOrReadOnly]
     
     # permission_classes= [IsAuthenticated]
+    
+    # This is a scope throttling( don't need throttling.py file)
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'review-detail'
     
 
         
