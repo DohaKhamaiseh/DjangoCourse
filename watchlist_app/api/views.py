@@ -8,6 +8,8 @@ from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 from watchlist_app.models import Watchlist, StreamPlatform, Review
@@ -17,6 +19,8 @@ from watchlist_app.api.serializers import (WatchlistSerializer,
 
 from watchlist_app.api.permissions import AdminOrReadOnly, ReviewUserOrReadOnly
 from watchlist_app.api.throttling import ReviewAVThrottle, ReviewCreateAVhrottle
+
+################ django-fliter package works with just views that inheritance from generics. ####################
 
 
 class WatchListAV(generics.ListCreateAPIView):
@@ -155,4 +159,63 @@ class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     throttle_scope = 'review-detail'
     
 
-        
+class ReviewUserAV(generics.ListAPIView):
+    """
+    A view to get all reviews for a user filtered by his/her username
+    """
+    
+
+    serializer_class = ReviewSerializer
+    
+    # overwrite queryset function
+    
+    # this way of filtering called : Filtering against URL
+    # def get_queryset(self):
+    #     # username this as what in the URL
+    #     username = self.kwargs['username']
+    #     # review_user is an id for user so from that id I got her/his username( FKey in the Review model)
+    #     return Review.objects.filter(review_user__username=username)
+    
+    # this way of filtering called : Filtering against query parameters
+    def get_queryset(self):
+        # username this as what in the URL as a query parameter
+        username = self.request.query_params.get('username', None)
+        # review_user is an id for user so from that id I got her/his username( FKey in the Review model)
+        return Review.objects.filter(review_user__username=username)
+
+
+class ReviewUserFilter(generics.ListAPIView):
+    """
+    A view for filter Reviews using django-filter package
+    """
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    filter_backends = [DjangoFilterBackend]
+    # the fields are from Review model(the fields are in or relationship(we can send just one of them or both))
+    # Filter(must be the exact name to get a result)
+    filterset_fields = ['review_user__username', 'active']
+
+class WatchListSearch(generics.ListAPIView):
+    """
+    A view for search watchlist using django-filter package
+    """
+    queryset = Watchlist.objects.all()
+    serializer_class = WatchlistSerializer
+    filter_backends = [filters.SearchFilter]
+    # the fields are from WatchList model(the fields are in or relationship(we can send just one of them or both))
+     # Search(must be just include name to get a result)
+     # platform isa FK in WatchList model so I got from the id of it the name of the platform
+    search_fields = ['title', 'platform__name']
+    
+
+class WatchListOrder(generics.ListAPIView):
+    """
+    A view for order watchlist using django-filter package
+    """
+    
+    queryset = Watchlist.objects.all()
+    serializer_class = WatchlistSerializer
+    filter_backends = [filters.OrderingFilter]
+    # the fields are from WatchList model(the fields are in or relationship(we can send just one of them or both))
+     # Order(by default ascending order)
+    ordering_fields = ['avg_rating']

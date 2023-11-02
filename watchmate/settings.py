@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'watchlist_app',
     'rest_framework',
     # this will create a table to store the token for each user(need migrate)
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    # this for using django-filter package to filter
+    'django_filters',
 ]
 
 MIDDLEWARE = [
