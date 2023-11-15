@@ -19,6 +19,7 @@ from watchlist_app.api.serializers import (WatchlistSerializer,
 
 from watchlist_app.api.permissions import AdminOrReadOnly, ReviewUserOrReadOnly
 from watchlist_app.api.throttling import ReviewAVThrottle, ReviewCreateAVhrottle
+from watchlist_app.api.pagination import WatchListPagination, WatchListLOPagintaion, WatchListCPagination
 
 ################ django-fliter package works with just views that inheritance from generics. ####################
 
@@ -32,6 +33,9 @@ class WatchListAV(generics.ListCreateAPIView):
     
     # The Admin is just who can create Watchlist
     permission_classes = [AdminOrReadOnly]
+    # pagination_class = WatchListPagination
+    # pagination_class = WatchListLOPagintaion
+    # pagination_class = WatchListCPagination
     
 class WatchDetailAV(generics.RetrieveUpdateDestroyAPIView):
     """

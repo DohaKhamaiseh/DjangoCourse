@@ -159,6 +159,15 @@ REST_FRAMEWORK = {
         'review-create':'2/day',
         'review-detail' : '2/day',
         
-    }
+    },
+    
+    # This is  a global pagination that will be applied to all views
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 10,
+    
+    # to make your response as the API's response(remember 'open weather' 3rd party API response) you should send it back as JSON response, so to convert it:
+       'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
 
 }
