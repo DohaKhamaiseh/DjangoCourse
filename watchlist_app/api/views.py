@@ -116,7 +116,8 @@ class ReviewCreateAV(generics.CreateAPIView):
     
     serializer_class = ReviewSerializer
     # here for Review create requests by registered users we have 2 requests per day
-    throttle_classes = [ReviewCreateAVhrottle]
+    # throttle_classes = [ReviewCreateAVhrottle]
+    permission_classes= [IsAuthenticated]
     
     # we need this for duplicating review issue
     def  get_queryset(self):
@@ -159,8 +160,8 @@ class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes= [IsAuthenticated]
     
     # This is a scope throttling( don't need throttling.py file)
-    throttle_classes = [ScopedRateThrottle]
-    throttle_scope = 'review-detail'
+    # throttle_classes = [ScopedRateThrottle]
+    # throttle_scope = 'review-detail'
     
 
 class ReviewUserAV(generics.ListAPIView):

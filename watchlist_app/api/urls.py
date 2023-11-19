@@ -53,13 +53,13 @@ urlpatterns = [
     
      # this way of filtering called : Filtering against query parameters
       # in the Postman we send it like this : http://127.0.0.1:8000/watch/reviews/?username=doha
-    #  path('reviews/', ReviewUserAV.as_view(), name='user-reviews-detail'),
+     path('reviews/', ReviewUserAV.as_view(), name='user-reviews-detail'),
      
       # this way of filtering is uisng django-filter package
       # in the Postman we send it like this : 
       # http://127.0.0.1:8000/watch/reviews/?review_user__username=doha&active=true
       # http://127.0.0.1:8000/watch/reviews/?review_user__username=doha
       # http://127.0.0.1:8000/watch/reviews/?active=true
-     path('reviews/', ReviewUserFilter.as_view(), name='user-reviews-detail'),
+    #  path('reviews/', ReviewUserFilter.as_view(), name='user-reviews-detail'),
     
 ]

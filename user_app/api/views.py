@@ -42,8 +42,9 @@ def registeration_view(request):
         
         else:
             data = serializer.errors
-            
-        return Response(data)
+        
+        # by default the status code will be HTTP_200_OK, but in test.py file we compare with HTTP_201_CREATED, so we should change it here    
+        return Response(data,status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 def logout_view(request):

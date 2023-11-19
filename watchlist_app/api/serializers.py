@@ -8,9 +8,9 @@ class ReviewSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Review
-        # fields = "__all__"
+        fields = "__all__"
         # we did this to avoid rewrites the watchlist id that we wanna create a review for it(th watchlist id is already in the url)
-        exclude = ('watchlist',)
+        # exclude = ('watchlist',)
 
 class WatchlistSerializer(serializers.ModelSerializer):
     # reviews = ReviewSerializer(many=True, read_only=True)

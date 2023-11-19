@@ -58,5 +58,6 @@ After Encoding:
 # The second request for Reviewlist(not authenticated), the first request already done(we allow for 1 anon request per day)
 ![Anon_throttling](./public/anon_throttling.png)
 
-# The response after using Pagination:
+# The response after using Pagination
+
 ![Page number Pagination](./public/pagination.png)
