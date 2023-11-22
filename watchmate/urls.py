@@ -25,6 +25,6 @@ urlpatterns = [
     path('accounts/', include("user_app.api.urls")),
     
     # to create login logout form for other users(not admin)
-    # when using Authenticatation we commet this line because have oue own Auth(Pop up window will be created to login)
+    # when using Authentication we commet this line because have our own Auth(Pop up window will be created to login)
     # path('api-auth',include('rest_framework.urls')),
 ]
