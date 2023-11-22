@@ -9,7 +9,7 @@
 **This a IMDB site where the admin user can add streamplatforms and watches and the normal user can add a reviews for that watches**
 
 
-## How?
+## HOW?
 
 1. Account:
     * to register use this link: http://127.0.0.1:8000/accounts/register/
