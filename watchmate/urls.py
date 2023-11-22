@@ -19,5 +19,12 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('movie/', include("watchlist_app.urls")),
+    path('watch/', include("watchlist_app.api.urls")),
+    
+    # this is for user_app which responsabile to login/logut users
+    path('accounts/', include("user_app.api.urls")),
+    
+    # to create login logout form for other users(not admin)
+    # when using Authentication we commet this line because have our own Auth(Pop up window will be created to login)
+    # path('api-auth',include('rest_framework.urls')),
 ]
